@@ -8,7 +8,7 @@ namespace Projecte_CRUD.Dades.Model
 {
     public class RangoProfesional
     {
-        public int AnosDeExperiencia { get; set; }
+        public int AniosDeExperiencia { get; set; }
         public string Nivel { get; set; }
     }
 }

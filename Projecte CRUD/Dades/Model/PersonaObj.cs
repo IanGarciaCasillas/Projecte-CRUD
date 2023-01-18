@@ -22,7 +22,7 @@ namespace Projecte_CRUD.Dades.Model
                 $"Edad: {Edad}\n\t" +
                 $"Lenguajes: {Lenguajes.Length}\n\t" +
                 $"Profesion: {Profesion}\n\t" +
-                $"Rango: {RangoProfesional.Nivel}|{RangoProfesional.AnosDeExperiencia}";
+                $"Rango: {RangoProfesional.Nivel}|{RangoProfesional.AniosDeExperiencia}";
             
             return linia;
         }

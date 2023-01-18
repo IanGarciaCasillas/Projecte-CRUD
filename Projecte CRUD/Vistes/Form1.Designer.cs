@@ -37,7 +37,8 @@
             this.lstPersones.ItemHeight = 15;
             this.lstPersones.Location = new System.Drawing.Point(1, 3);
             this.lstPersones.Name = "lstPersones";
-            this.lstPersones.Size = new System.Drawing.Size(793, 409);
+            this.lstPersones.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.lstPersones.Size = new System.Drawing.Size(530, 409);
             this.lstPersones.TabIndex = 1;
             // 
             // Form1
