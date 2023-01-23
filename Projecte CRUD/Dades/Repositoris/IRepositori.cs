@@ -14,6 +14,8 @@ namespace Projecte_CRUD.Dades.Repositoris
         Task<IReadOnlyCollection<FirebaseObject<PersonaObj>>> ObtenirPersona();
         void AfegirPersona(PersonaObj persona, string nom);
 
+        void EliminarPersona(string nomPersona);
+
         
     }
 }

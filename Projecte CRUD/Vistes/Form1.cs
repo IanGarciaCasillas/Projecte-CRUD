@@ -19,25 +19,12 @@ namespace Projecte_CRUD
             CarregarPersones();
         }
 
-       public async void CarregarPersones()
-       {
-
-            lstPersones.Items.Clear();
-
-            var persones = await Domini.ObtenirPersona();
-
-            foreach (var pers in persones)
-            {
-                lstPersones.Items.Add($"{pers.Key}:\n\t{pers.Object.ToString()}");
-                //lstPersones.Items.Add($"{pers.Key}");
-            }
-
-       }
 
         private void btnNovaPersona_Click(object sender, EventArgs e)
         {
             NovaPersonaForm window = new NovaPersonaForm(Domini);
             window.ShowDialog();
+            CarregarPersones();
         }
 
         private void btnLlegir_Click(object sender, EventArgs e)
@@ -52,7 +39,15 @@ namespace Projecte_CRUD
 
         private void btnElimina_Click(object sender, EventArgs e)
         {
+            var idx = lstPersones.SelectedIndex;
 
+            string dadesPersona = lstPersones.Items[idx].ToString();
+
+            Domini.EliminarPersona(dadesPersona);
+
+            System.Threading.Thread.Sleep(1000);
+            CarregarPersones();
+            
         }
 
         private void lstPersones_SelectedIndexChanged(object sender, EventArgs e)
@@ -80,5 +75,19 @@ namespace Projecte_CRUD
         {
             CarregarPersones();
         }
+       public async void CarregarPersones()
+       {
+
+            lstPersones.Items.Clear();
+
+            var persones = await Domini.ObtenirPersona();
+
+            foreach (var pers in persones)
+            {
+                //lstPersones.Items.Add($"{pers.Key}:\n\t{pers.Object.ToString()}");
+                lstPersones.Items.Add($"{pers.Key}");
+            }
+
+       }
     }
 }

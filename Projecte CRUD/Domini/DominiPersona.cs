@@ -29,5 +29,10 @@ namespace Projecte_CRUD.Domini
         {
             Repositori.AfegirPersona(persona,nom);
         }
+
+        public void EliminarPersona(string nomPersona)
+        {
+            Repositori.EliminarPersona(nomPersona);
+        }
     }
 }

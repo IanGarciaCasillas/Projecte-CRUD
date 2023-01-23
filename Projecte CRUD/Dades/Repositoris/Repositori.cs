@@ -31,5 +31,9 @@ namespace Projecte_CRUD.Dades.Repositoris
             await Firebase.Child("PersonasObject").Child(nom).PutAsync(persona);
         }
 
+        public async void EliminarPersona(string nomPersona)
+        {
+            await Firebase.Child("PersonasObject").Child(nomPersona).DeleteAsync();
+        }
     }
 }

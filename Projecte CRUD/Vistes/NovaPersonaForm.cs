@@ -69,6 +69,7 @@ namespace Projecte_CRUD.Vistes
             string llenguatge = this.txbLlenguatge.Text.ToString();
 
             this.lsbLlenguatge.Items.Add(llenguatge);
+            this.txbLlenguatge.Text = "";
 
         }
 

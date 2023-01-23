@@ -14,5 +14,7 @@ namespace Projecte_CRUD.Domini
     {
         Task<IReadOnlyCollection<FirebaseObject<PersonaObj>>> ObtenirPersona();
         void AfegirPersona(PersonaObj persona, string nom);
+
+        void EliminarPersona(string nomPersona);
     }
 }
