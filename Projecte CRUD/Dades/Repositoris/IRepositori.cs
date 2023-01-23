@@ -1,4 +1,5 @@
 ﻿using Firebase.Database;
+using Firebase.Database.Query;
 using Projecte_CRUD.Dades.Model;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,8 @@ namespace Projecte_CRUD.Dades.Repositoris
     public interface IRepositori
     {
         Task<IReadOnlyCollection<FirebaseObject<PersonaObj>>> ObtenirPersona();
+        void AfegirPersona(PersonaObj persona, string nom);
+
+        
     }
 }

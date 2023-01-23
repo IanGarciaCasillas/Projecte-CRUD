@@ -8,7 +8,8 @@ namespace Projecte_CRUD.Dades.Model
 {
     public class PersonaObj
     {
-        public string DisponibilidadParaViajar { get; set; }
+        //public string Nom { get; set; }
+        public bool DisponibilidadParaViajar { get; set; }
         public int Edad { get; set; }
         public string[] Lenguajes { get; set; }
         public string Profesion { get; set; }
