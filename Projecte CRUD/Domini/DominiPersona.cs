@@ -34,5 +34,10 @@ namespace Projecte_CRUD.Domini
         {
             Repositori.EliminarPersona(nomPersona);
         }
+
+        public Task<IReadOnlyCollection<FirebaseObject<PersonaObj>>> ObtenirUnaPersona(string keyNom)
+        {
+            return Repositori.ObtenirUnaPersona(keyNom);
+        }
     }
 }

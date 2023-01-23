@@ -35,5 +35,11 @@ namespace Projecte_CRUD.Dades.Repositoris
         {
             await Firebase.Child("PersonasObject").Child(nomPersona).DeleteAsync();
         }
+
+        public async Task<IReadOnlyCollection<FirebaseObject<PersonaObj>>> ObtenirUnaPersona(string keyNom)
+        {
+            return await Firebase.Child("PersonasObject").OrderByKey().StartAt(keyNom).LimitToFirst(1).OnceAsync<PersonaObj>();
+
+        }
     }
 }

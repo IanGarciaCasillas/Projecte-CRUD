@@ -29,7 +29,12 @@ namespace Projecte_CRUD
 
         private void btnLlegir_Click(object sender, EventArgs e)
         {
+            var idx = lstPersones.SelectedIndex;
+            string dadesPersona = lstPersones.Items[idx].ToString();
 
+            UnaPersona(dadesPersona);
+            
+            CarregarPersones();
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
@@ -40,7 +45,6 @@ namespace Projecte_CRUD
         private void btnElimina_Click(object sender, EventArgs e)
         {
             var idx = lstPersones.SelectedIndex;
-
             string dadesPersona = lstPersones.Items[idx].ToString();
 
             Domini.EliminarPersona(dadesPersona);
@@ -60,13 +64,11 @@ namespace Projecte_CRUD
             if (idxsSelects.Count > 1)
             {
                 btnElimina.Visible = true;
-                btnEditar.Visible = false;
                 btnLlegir.Visible = false;
             }
             if (idxsSelects.Count == 1)
             {
                 btnElimina.Visible = true;
-                btnEditar.Visible   = true;
                 btnLlegir.Visible = true;
             }
         }
@@ -75,7 +77,17 @@ namespace Projecte_CRUD
         {
             CarregarPersones();
         }
-       public async void CarregarPersones()
+
+        public async void UnaPersona(string dadesPersona)
+        {
+            var result = await Domini.ObtenirUnaPersona(dadesPersona);
+
+            var person = result.First();
+            InfoPersonaForm window = new InfoPersonaForm(person,Domini);
+            window.ShowDialog();
+
+        }
+        public async void CarregarPersones()
        {
 
             lstPersones.Items.Clear();
