@@ -25,19 +25,37 @@ namespace Projecte_CRUD.Domini
             return Repositori.ObtenirPersona();
         }
 
-        public void AfegirPersona(PersonaObj persona,string nom)
+        public async Task AfegirPersona(PersonaObj persona,string nom)
         {
-            Repositori.AfegirPersona(persona,nom);
+            await Repositori.AfegirPersona(persona, nom);
         }
 
-        public void EliminarPersona(string nomPersona)
+        public async Task EliminarPersona(string nomPersona)
         {
-            Repositori.EliminarPersona(nomPersona);
+            await Repositori.EliminarPersona(nomPersona);
         }
 
         public Task<IReadOnlyCollection<FirebaseObject<PersonaObj>>> ObtenirUnaPersona(string keyNom)
         {
             return Repositori.ObtenirUnaPersona(keyNom);
+        }
+
+        public async Task<bool> ExistPersona(string nom)
+        {
+            bool trobat = false;
+            var lstPersones = await ObtenirPersona();
+            
+            foreach(var person in lstPersones)
+            {
+                if (person.Key == nom)
+                {
+                    trobat = true;
+                    break;
+                }
+            }
+
+
+            return trobat;
         }
     }
 }

@@ -8,14 +8,12 @@ namespace Projecte_CRUD
     public partial class Form1 : Form
     {
         public IDomini Domini { get; set; }
-        bool esEditable = false;
-        bool esEliminable = false;
-        bool esLlegible = false;
+        
         public Form1()
         {
             InitializeComponent();
             Domini = new DominiPersona();
-
+            this.btnActualitzar.Visible = false;
             CarregarPersones();
         }
 
@@ -37,18 +35,24 @@ namespace Projecte_CRUD
             CarregarPersones();
         }
 
-        private void btnEditar_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnElimina_Click(object sender, EventArgs e)
         {
+            foreach(var idx in lstPersones.SelectedIndices)
+            {
+                string dadesPersona = lstPersones.Items[Convert.ToInt32(idx.ToString())].ToString();
+                var resultUser = MessageBox.Show($"Segur que vols eliminar la persona {dadesPersona}", "Eliminar persona", MessageBoxButtons.OKCancel);
+                if (resultUser == DialogResult.OK)
+                {
+                    Domini.EliminarPersona(dadesPersona);
+                    MessageBox.Show($"S'ha eliminat la persona {dadesPersona}");
+                }
+                //var nada = $"Eliminara el item {dadesPersona}";
+            }
+            /*
             var idx = lstPersones.SelectedIndex;
             string dadesPersona = lstPersones.Items[idx].ToString();
-
             Domini.EliminarPersona(dadesPersona);
-
+            */
             System.Threading.Thread.Sleep(1000);
             CarregarPersones();
             
@@ -85,6 +89,7 @@ namespace Projecte_CRUD
             var person = result.First();
             InfoPersonaForm window = new InfoPersonaForm(person,Domini);
             window.ShowDialog();
+            CarregarPersones();
 
         }
         public async void CarregarPersones()

@@ -44,6 +44,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txbNivell = new System.Windows.Forms.TextBox();
             this.btnAdd = new System.Windows.Forms.Button();
+            this.btnEliminarLeng = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txbNom
@@ -181,11 +182,22 @@
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
+            // btnEliminarLeng
+            // 
+            this.btnEliminarLeng.Location = new System.Drawing.Point(158, 275);
+            this.btnEliminarLeng.Name = "btnEliminarLeng";
+            this.btnEliminarLeng.Size = new System.Drawing.Size(75, 23);
+            this.btnEliminarLeng.TabIndex = 33;
+            this.btnEliminarLeng.Text = "Eliminar";
+            this.btnEliminarLeng.UseVisualStyleBackColor = true;
+            this.btnEliminarLeng.Click += new System.EventHandler(this.btnEliminarLeng_Click);
+            // 
             // NovaPersonaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnEliminarLeng);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txbNivell);
@@ -227,5 +239,6 @@
         private Label label6;
         private TextBox txbNivell;
         private Button btnAdd;
+        private Button btnEliminarLeng;
     }
 }

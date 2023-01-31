@@ -23,12 +23,10 @@ namespace Projecte_CRUD.Vistes
             Domini = domini;
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private async void btnAdd_Click(object sender, EventArgs e)
         {
-            
             RangoProfesional rangProfesional = new RangoProfesional();
             PersonaObj newPerson = new PersonaObj();
-
 
             string nom = this.txbNom.Text.ToString();
             string edat = this.txbEdat.Text.ToString();
@@ -41,14 +39,11 @@ namespace Projecte_CRUD.Vistes
             rangProfesional.AniosDeExperiencia = Convert.ToInt32(ansExperiencia);
             rangProfesional.Nivel = nivell;
 
-
             newPerson.DisponibilidadParaViajar = disponViatjar;
             newPerson.Edad = Convert.ToInt32(edat);
 
             newPerson.Profesion = profesion;
             newPerson.RangoProfesional = rangProfesional;
-
-
 
             var count = llenguatges.Count;
             string[] llenguatgesList = new string[count];
@@ -56,22 +51,29 @@ namespace Projecte_CRUD.Vistes
             {
                 llenguatgesList[i] = (string)llenguatges[i];
             }
-
-
             newPerson.Lenguajes = llenguatgesList;
 
-            Domini.AfegirPersona(newPerson, nom);
-
+            if (await Domini.ExistPersona(nom))
+                MessageBox.Show($"La persona {nom} ja existeix");
+            else
+            {
+                await Domini.AfegirPersona(newPerson, nom);
+                MessageBox.Show($"Persona {nom} afegida");
+            }
         }
 
         private void btnAddLlenguatge_Click(object sender, EventArgs e)
         {
             string llenguatge = this.txbLlenguatge.Text.ToString();
-
             this.lsbLlenguatge.Items.Add(llenguatge);
             this.txbLlenguatge.Text = "";
-
         }
 
+        private void btnEliminarLeng_Click(object sender, EventArgs e)
+        {
+            var idx = lsbLlenguatge.SelectedIndex;
+            var nomLeng = lsbLlenguatge.Items[idx].ToString();
+            lsbLlenguatge.Items.Remove(nomLeng);
+        }
     }
 }

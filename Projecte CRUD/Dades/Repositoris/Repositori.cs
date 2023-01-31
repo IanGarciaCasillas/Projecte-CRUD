@@ -26,12 +26,12 @@ namespace Projecte_CRUD.Dades.Repositoris
             return await Firebase.Child("PersonasObject").OrderByKey().OnceAsync<PersonaObj>();
         }
 
-        public async void AfegirPersona(PersonaObj persona, string nom)
+        public async Task AfegirPersona(PersonaObj persona, string nom)
         {
             await Firebase.Child("PersonasObject").Child(nom).PutAsync(persona);
         }
 
-        public async void EliminarPersona(string nomPersona)
+        public async Task EliminarPersona(string nomPersona)
         {
             await Firebase.Child("PersonasObject").Child(nomPersona).DeleteAsync();
         }
@@ -39,7 +39,6 @@ namespace Projecte_CRUD.Dades.Repositoris
         public async Task<IReadOnlyCollection<FirebaseObject<PersonaObj>>> ObtenirUnaPersona(string keyNom)
         {
             return await Firebase.Child("PersonasObject").OrderByKey().StartAt(keyNom).LimitToFirst(1).OnceAsync<PersonaObj>();
-
         }
     }
 }

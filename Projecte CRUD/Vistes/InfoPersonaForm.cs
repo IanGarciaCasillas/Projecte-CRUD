@@ -28,7 +28,7 @@ namespace Projecte_CRUD.Vistes
             this.txbAnsExperiencia.Text = Person.Object.RangoProfesional.AniosDeExperiencia.ToString();
             this.txbNivell.Text = Person.Object.RangoProfesional.Nivel;
             this.chbDisponViatjar.Checked = Person.Object.DisponibilidadParaViajar;
-            this.txbNom.Enabled = false;
+            //this.txbNom.Enabled = false;
             foreach(var item in Person.Object.Lenguajes)
             {
                 lsbLlenguatge.Items.Add(item);
@@ -62,7 +62,7 @@ namespace Projecte_CRUD.Vistes
             lsbLlenguatge.Items.Remove(nomLeng);
         }
 
-        private void btnUpdatePerson_Click(object sender, EventArgs e)
+        private async void btnUpdatePerson_Click(object sender, EventArgs e)
         {
 
             RangoProfesional rangProfesional = new RangoProfesional();
@@ -81,10 +81,8 @@ namespace Projecte_CRUD.Vistes
 
             newPerson.DisponibilidadParaViajar = disponViatjar;
             newPerson.Edad = Convert.ToInt32(edat);
-
             newPerson.Profesion = profesion;
             newPerson.RangoProfesional = rangProfesional;
-
 
             var count = llenguatges.Count;
             string[] llenguatgesList = new string[count];
@@ -93,11 +91,34 @@ namespace Projecte_CRUD.Vistes
                 llenguatgesList[i] = (string)llenguatges[i];
             }
 
-
             newPerson.Lenguajes = llenguatgesList;
             
+            
+            if (Person.Key != nom)
+            {
+                if(await Domini.ExistPersona(nom))
+                {
+                    var resultUser = MessageBox.Show($"Ja exiteix la persona {nom}\n Segur que vols confirmar els canvis?", "Persona existent", MessageBoxButtons.OKCancel);
 
-            Domini.AfegirPersona(newPerson, Person.Key);
+                    if(resultUser == DialogResult.OK)
+                    {
+                        await Domini.EliminarPersona(Person.Key);
+                        await Domini.AfegirPersona(newPerson, nom);
+                        MessageBox.Show($"Informacio de la persona {nom} actualitzada");
+                    }
+                }
+                else
+                {
+                    await Domini.EliminarPersona(Person.Key);
+                    await Domini.AfegirPersona(newPerson, nom);
+                    MessageBox.Show($"Informacio de la persona {nom} actualitzada");
+                }
+            }
+            else
+            {
+                await Domini.AfegirPersona(newPerson,Person.Key);
+                MessageBox.Show($"Informacio de la persona {nom} actualitzada");
+            }
         }
     }
 }
