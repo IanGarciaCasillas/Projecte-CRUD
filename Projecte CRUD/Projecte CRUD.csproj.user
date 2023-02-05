@@ -4,7 +4,13 @@
     <Compile Update="Vistes\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Vistes\InfoPersonaArrayForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Vistes\InfoPersonaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Vistes\NovaPersonaArrayForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Vistes\NovaPersonaForm.cs">

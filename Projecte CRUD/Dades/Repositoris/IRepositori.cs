@@ -17,6 +17,11 @@ namespace Projecte_CRUD.Dades.Repositoris
         Task<IReadOnlyCollection<FirebaseObject<PersonaObj>>> ObtenirUnaPersona(string keyNom);
 
 
-        
+        Task<IReadOnlyCollection<FirebaseObject<PersonaArray>>> ObtenirPersonesArray();
+        Task AfegirPersonaArray(PersonaArray persona,string idx);
+        Task EliminarPersonaArray(string idxPersona);
+
+
+
     }
 }

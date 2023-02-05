@@ -1,5 +1,4 @@
-﻿using Firebase.Database;
-using Projecte_CRUD.Dades.Model;
+﻿using Projecte_CRUD.Dades.Model;
 using Projecte_CRUD.Domini;
 using System;
 using System.Collections.Generic;
@@ -13,25 +12,28 @@ using System.Windows.Forms;
 
 namespace Projecte_CRUD.Vistes
 {
-    public partial class InfoPersonaForm : Form
+    public partial class InfoPersonaArrayForm : Form
     {
-        FirebaseObject<PersonaObj> Person { get; set; }
+        public PersonaArray Persona { get; set; }
+        public string IdxPersona { get; set; }
         IDomini Domini { get; set; }
-        public InfoPersonaForm(FirebaseObject<PersonaObj> person, IDomini domini)
+        public InfoPersonaArrayForm(PersonaArray person, string keyPerson, IDomini domini)
         {
-            InitializeComponent();
-            Person = person;
+            Persona = person;
+            IdxPersona = keyPerson;
             Domini = domini;
-            this.txbNom.Text = Person.Key;
-            this.txbEdat.Text = Person.Object.Edad.ToString();
-            this.txbProfesion.Text = Person.Object.Profesion;
-            this.txbAnsExperiencia.Text = Person.Object.RangoProfesional.AniosDeExperiencia.ToString();
-            this.txbNivell.Text = Person.Object.RangoProfesional.Nivel;
-            this.chbDisponViatjar.Checked = Person.Object.DisponibilidadParaViajar;
-            //this.txbNom.Enabled = false;
-            foreach(var item in Person.Object.Lenguajes)
+            InitializeComponent();
+
+            this.txbNom.Text = Persona.Nombre;
+            this.txbEdat.Text = Persona.Edad.ToString();
+            this.txbProfesion.Text = Persona.Profesion.ToString();
+            this.txbAnsExperiencia.Text = Persona.RangoProfesional.AniosDeExperiencia.ToString();
+            this.txbNivell.Text = Persona.RangoProfesional.Nivel;
+            this.chbDisponViatjar.Checked = Persona.DisponibilidadParaViajar;
+
+            foreach(var leng in Persona.Lenguajes)
             {
-                lsbLlenguatge.Items.Add(item);
+                lsbLlenguatge.Items.Add(leng);
             }
         }
 
@@ -47,29 +49,13 @@ namespace Projecte_CRUD.Vistes
         {
             var idx = lsbLlenguatge.SelectedIndex;
             var nomLeng = lsbLlenguatge.Items[idx].ToString();
-            /*
-            List<string> list = new List<string>();
-            foreach(var item in Person.Object.Lenguajes)
-            {
-                if(item != nomLeng)
-                {
-
-                    list.Add(item);
-                }
-
-            }
-            var newArray = list.ToArray();
-            Person.Object.Lenguajes = newArray;
-            */
             lsbLlenguatge.Items.Remove(nomLeng);
         }
 
         private async void btnUpdatePerson_Click(object sender, EventArgs e)
         {
-
             RangoProfesional rangProfesional = new RangoProfesional();
-            PersonaObj newPerson = new PersonaObj();
-
+            PersonaArray newPerson = new PersonaArray();
             string nom = this.txbNom.Text.ToString();
             string edat = this.txbEdat.Text.ToString();
             string profesion = this.txbProfesion.Text.ToString();
@@ -83,6 +69,7 @@ namespace Projecte_CRUD.Vistes
 
             newPerson.DisponibilidadParaViajar = disponViatjar;
             newPerson.Edad = Convert.ToInt32(edat);
+            newPerson.Nombre = nom;
             newPerson.Profesion = profesion;
             newPerson.RangoProfesional = rangProfesional;
 
@@ -92,33 +79,31 @@ namespace Projecte_CRUD.Vistes
             {
                 llenguatgesList[i] = (string)llenguatges[i];
             }
-
             newPerson.Lenguajes = llenguatgesList;
-            
-            
-            if (Person.Key != nom)
+
+            if(Persona.Nombre != nom)
             {
-                if(await Domini.ExistPersona(nom))
+                var result = await Domini.ExistPersonaArray(nom);
+                if (result.Item1)
                 {
                     var resultUser = MessageBox.Show($"Ja exiteix la persona {nom}\n Segur que vols confirmar els canvis?", "Persona existent", MessageBoxButtons.OKCancel);
-
                     if(resultUser == DialogResult.OK)
                     {
-                        await Domini.EliminarPersona(Person.Key);
-                        await Domini.AfegirPersona(newPerson, nom);
+                        await Domini.EliminarPersonaArray(IdxPersona);
+                        await Domini.AfegirPersonaArray(newPerson, IdxPersona);
                         MessageBox.Show($"Informacio de la persona {nom} actualitzada");
                     }
                 }
                 else
                 {
-                    await Domini.EliminarPersona(Person.Key);
-                    await Domini.AfegirPersona(newPerson, nom);
+                    await Domini.EliminarPersonaArray(IdxPersona);
+                    await Domini.AfegirPersonaArray(newPerson, IdxPersona);
                     MessageBox.Show($"Informacio de la persona {nom} actualitzada");
                 }
             }
             else
             {
-                await Domini.AfegirPersona(newPerson,Person.Key);
+                await Domini.AfegirPersonaArray(newPerson, IdxPersona);
                 MessageBox.Show($"Informacio de la persona {nom} actualitzada");
             }
         }

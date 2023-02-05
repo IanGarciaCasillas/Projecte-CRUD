@@ -20,7 +20,7 @@ namespace Projecte_CRUD.Dades.Repositoris
         {
             Firebase = FireBaseClient.GetFireBaseClient();
         }
-
+        #region PERSONA OBJECT
         public async Task<IReadOnlyCollection<FirebaseObject<PersonaObj>>> ObtenirPersona()
         {
             return await Firebase.Child("PersonasObject").OrderByKey().OnceAsync<PersonaObj>();
@@ -39,6 +39,20 @@ namespace Projecte_CRUD.Dades.Repositoris
         public async Task<IReadOnlyCollection<FirebaseObject<PersonaObj>>> ObtenirUnaPersona(string keyNom)
         {
             return await Firebase.Child("PersonasObject").OrderByKey().StartAt(keyNom).LimitToFirst(1).OnceAsync<PersonaObj>();
+        }
+        #endregion
+
+        public async Task<IReadOnlyCollection<FirebaseObject<PersonaArray>>> ObtenirPersonesArray()
+        {
+            return await Firebase.Child("PersonasArray").OrderByKey().OnceAsListAsync<PersonaArray>();
+        }
+        public async Task AfegirPersonaArray(PersonaArray persona,string idx)
+        {
+            await Firebase.Child("PersonasArray").Child(idx).PutAsync(persona);
+        }
+        public async Task EliminarPersonaArray(string idxPersona)
+        {
+            await Firebase.Child("PersonasArray").Child(idxPersona).DeleteAsync();
         }
     }
 }
